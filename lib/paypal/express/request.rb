@@ -7,7 +7,8 @@ module Paypal
       def setup(payment_requests, return_url, cancel_url, options = {})
         params = {
           :RETURNURL => return_url,
-          :CANCELURL => cancel_url
+          :CANCELURL => cancel_url,
+          :version   => Paypal.api_version
         }
         if options[:no_shipping]
           params[:REQCONFIRMSHIPPING] = 0

@@ -8,7 +8,7 @@ module Paypal
         params = {
           :RETURNURL => return_url,
           :CANCELURL => cancel_url,
-          :version   => Paypal.api_version
+          :VERSION   => Paypal.api_version
         }
         if options[:no_shipping]
           params[:REQCONFIRMSHIPPING] = 0
@@ -37,7 +37,10 @@ module Paypal
       end
 
       def details(token)
-        response = self.request :GetExpressCheckoutDetails, {:TOKEN => token}
+        response = self.request :GetExpressCheckoutDetails, {
+          :TOKEN   => token,
+          :VERSION => Paypal.api_version
+        }
         Response.new response
       end
 
@@ -49,7 +52,8 @@ module Paypal
       def checkout!(token, payer_id, payment_requests)
         params = {
           :TOKEN => token,
-          :PAYERID => payer_id
+          :PAYERID => payer_id,
+          :VERSION => Paypal.api_version
         }
         Array(payment_requests).each_with_index do |payment_request, index|
           params.merge! payment_request.to_params(index)

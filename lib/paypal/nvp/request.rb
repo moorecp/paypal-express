@@ -24,13 +24,14 @@ module Paypal
       end
 
       def common_params
-        {
+        params = {
           :USER => self.username,
           :PWD => self.password,
           :SIGNATURE => self.signature,
-          :SUBJECT => self.subject,
           :VERSION => self.version
         }
+        params[:SUBJECT] = self.subject if self.subject
+        params
       end
 
       def request(method, params = {})
